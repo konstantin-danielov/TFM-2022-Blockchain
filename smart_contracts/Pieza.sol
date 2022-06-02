@@ -13,16 +13,16 @@ contract Pieza {
         Almacenamiento,
         VentaPieza
     }
-    enum TipoOperario {
+    enum TipoOperador {
         Transportista,
         PersonalMatadero,
         PersonalSecadero,
         PersonalAlmacen
     }
 
-    struct Operario {
+    struct Operador {
         string nombre;
-        TipoOperario tipoOperario;
+        TipoOperador tipoOperador;
     }
 
     struct Ruta {
@@ -32,7 +32,7 @@ contract Pieza {
     }
 
     struct ProcesoPieza {
-        Operario operario;
+        Operador Operador;
         TipoProceso tipoProceso;
         string observaciones;
         Ruta ruta; // Solo se usa para el tipo Transporte
@@ -49,7 +49,7 @@ contract Pieza {
     }
 
     function addProcesoToPieza(
-        Operario memory _operario,
+        Operador memory _operador,
         TipoProceso _tipoProceso,
         string memory _observaciones,
         string memory _fechaInicio,
@@ -65,7 +65,7 @@ contract Pieza {
         }
         ProcesoPieza memory proceso;
 
-        proceso.operario = _operario;
+        proceso.Operador = _operador;
         proceso.tipoProceso = _tipoProceso;
         proceso.observaciones = _observaciones;
         proceso.ruta = ruta;
