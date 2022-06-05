@@ -111,5 +111,30 @@ contract PiezaFactory {
         }
     }
 
-    function trazabilidadPieza(uint256 _idPieza) public {}
+    function trazabilidadPieza(uint256 _idPieza)
+        public
+        view
+        returns (Matanza memory, Pieza)
+    {
+        return (matanzas[piezaToMatanza[_idPieza]], piezas[_idPieza]);
+    }
+
+    function addProcesoToPieza(
+        uint256 _idPieza,
+        Pieza.Operador memory _operador,
+        string memory _tipoProceso,
+        string memory _observaciones,
+        string memory _fechaInicio,
+        string memory _fechaFin,
+        string[] memory _paradas
+    ) public {
+        piezas[_idPieza].addProceso(
+            _operador,
+            _tipoProceso,
+            _observaciones,
+            _fechaInicio,
+            _fechaFin,
+            _paradas
+        );
+    }
 }

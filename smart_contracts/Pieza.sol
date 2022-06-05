@@ -7,22 +7,10 @@ contract Pieza {
         Jamon,
         Paletilla
     }
-    enum TipoProceso {
-        Transporte,
-        Secado,
-        Almacenamiento,
-        VentaPieza
-    }
-    enum TipoOperador {
-        Transportista,
-        PersonalMatadero,
-        PersonalSecadero,
-        PersonalAlmacen
-    }
 
     struct Operador {
-        string nombre;
-        TipoOperador tipoOperador;
+        string nombreOperador;
+        string tipoOperador;
     }
 
     struct Ruta {
@@ -33,7 +21,7 @@ contract Pieza {
 
     struct ProcesoPieza {
         Operador Operador;
-        TipoProceso tipoProceso;
+        string tipoProceso;
         string observaciones;
         Ruta ruta; // Solo se usa para el tipo Transporte
     }
@@ -48,9 +36,9 @@ contract Pieza {
         tipoPieza = _tipoPieza;
     }
 
-    function addProcesoToPieza(
+    function addProceso(
         Operador memory _operador,
-        TipoProceso _tipoProceso,
+        string memory _tipoProceso,
         string memory _observaciones,
         string memory _fechaInicio,
         string memory _fechaFin,
@@ -58,7 +46,7 @@ contract Pieza {
     ) public {
         Ruta memory ruta;
 
-        if (_tipoProceso == TipoProceso.Transporte) {
+        if (compareStrings(_tipoProceso, "Transporte")) {
             ruta.fechaInicio = _fechaInicio;
             ruta.fechaFin = _fechaFin;
             ruta.paradas = _paradas;
@@ -71,5 +59,13 @@ contract Pieza {
         proceso.ruta = ruta;
 
         procesoPieza.push(proceso);
+    }
+
+    function compareStrings(string memory a, string memory b)
+        public
+        pure
+        returns (bool)
+    {
+        return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
     }
 }
